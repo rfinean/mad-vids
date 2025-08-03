@@ -7,6 +7,7 @@ const PlayerPage = () => {
   const [playersJoined, setPlayersJoined] = useState(0);
   const [countdown, setCountdown] = useState(30);
   const [playerName, setPlayerName] = useState("");
+  const [tempPlayerName, setTempPlayerName] = useState("");
   const [themePrompt, setThemePrompt] = useState("[Generated Theme]");
 
   const handleJoin = async (e: React.FormEvent) => {
@@ -86,12 +87,17 @@ const PlayerPage = () => {
           <>
             <h1>Compete</h1>
             <h2>Enter your name to join the duel:</h2>
-            <form onSubmit={handleJoin}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPlayerName(e.target.value); // Update playerName only on form submission
+                handleJoin(e); // Call the existing handleJoin function
+              }}
+            >
               <input
                 type="text"
                 placeholder="Enter your name"
                 value={playerName}
-                onChange={(e) => setPlayerName(e.target.value)}
                 required
               />
               <button type="submit">Join</button>
